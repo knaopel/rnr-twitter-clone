@@ -1,8 +1,11 @@
 const webpack = require('webpack');
 
 module.exports = {
-  entry: './app/assets/frontend/main.jsx',
-  devtool: false,
+  entry: {
+    bundle: './app/assets/frontend/main.jsx'
+  },
+  // devtool: 'eval-source-map', // inline map
+  devtool: false, // use SourceMapDevToolPlugin
   plugins: [
     new webpack.SourceMapDevToolPlugin({
       filename: '[name].js.map'
