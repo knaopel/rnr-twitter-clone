@@ -14,3 +14,7 @@
 
 # Ignore Node Modules
 node_modules/
+
+# bundled files
+app/assets/javascripts/main.js.map
+app/assets/javascripts/bundle.js

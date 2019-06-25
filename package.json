@@ -8,6 +8,7 @@
     "test": "test"
   },
   "scripts": {
+    "start": "webpack -w -d",
     "build": "webpack --mode production"
   },
   "repository": {
