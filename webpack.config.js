@@ -1,22 +1,23 @@
+const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    bundle: './app/assets/frontend/main.jsx'
+    app: './app/assets/frontend/main.jsx'
   },
   // devtool: 'eval-source-map', // inline map
   devtool: false, // use SourceMapDevToolPlugin
   plugins: [
     new webpack.SourceMapDevToolPlugin({
-      filename: '[name].js.map'
+      filename: '[name].bundle.js.map'
     })
   ],
   resolve: {
     extensions: ['.js', '.jsx']
   },
   output: {
-    path: __dirname + '/app/assets/javascripts',
-    filename: 'bundle.js'
+    path: path.resolve(__dirname, 'app/assets/javascripts'),
+    filename: '[name].bundle.js'
   },
   module: {
     rules: [
