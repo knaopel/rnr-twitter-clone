@@ -6,28 +6,30 @@
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
   <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-            
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>        
 </head>
 <body>
-<div class="right">
-<% if user_signed_in? %>
-Welcome <%= current_user.email %>,
-<%= link_to "logout", destroy_user_session_path, method: 'DELETE' %>
+  <div class="container">
+    <div class="right">
+    <% if user_signed_in? %>
+    Welcome <%= link_to current_user.display_name, "/profile" %>,
+    <%= link_to "logout", destroy_user_session_path, method: 'DELETE' %>
 
-<% else %>
-Please 
-<%= link_to "login", new_user_session_path %>
- or 
- <%= link_to "sign up", new_user_registration_path %>
-<% end  %>
-</div>
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
+    <% else %>
+    Please 
+    <%= link_to "login", new_user_session_path %>
+    or 
+    <%= link_to "sign up", new_user_registration_path %>
+    <% end  %>
+    </div>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+  </div>
   <%= yield %>
 
 </body>

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
+  resources :tweets
   get 'profile' => 'profile#index'
-  post 'profile' => 'profile#update'
+  patch 'profile' => 'profile#update'
 
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.

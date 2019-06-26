@@ -1,5 +1,6 @@
 import TweetBox from './components/tweet-box';
 import TweetList from './components/tweet-list';
+import { SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION } from 'constants';
 
 class Main extends React.Component {
   constructor(props) {
@@ -8,11 +9,33 @@ class Main extends React.Component {
       tweetsList: []
     };
   }
-  addTweet(tweetToAdd) {
-    let newTweetsList = this.state.tweetsList;
-    newTweetsList.unshift({ id: Date.now(), name: 'Guest', body: tweetToAdd })
 
-    this.setState({ tweetsList: newTweetsList });
+  formattedTweets(tweetsList) {
+    const formattedList = tweetsList.map(tweet => {
+      tweet.formattedDate = moment(tweet.created_at).fromNow();
+      return tweet;
+    });
+    return {
+      tweetsList: formattedList
+    };
+  }
+
+  addTweet(tweetToAdd) {
+    $.post("/tweets", { body: tweetToAdd })
+      .success(savedTweet => {
+        let newTweetsList = this.state.tweetsList;
+        newTweetsList.unshift(savedTweet)
+
+        this.setState(this.formattedTweets(newTweetsList));
+      })
+      .error(error => console.log(error));
+
+  }
+
+  componentDidMount() {
+    $.ajax("/tweets")
+      .success(data => this.setState(this.formattedTweets(data)))
+        .error(error => console.log(error));
   }
 
   render() {
