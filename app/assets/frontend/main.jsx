@@ -1,47 +1,48 @@
 import TweetBox from './components/tweet-box';
 import TweetList from './components/tweet-list';
-import { SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION } from 'constants';
+import TweetStore from './stores/tweet-store';
+
+import TweetActions from './actions/tweet-actions';
+TweetActions.getAllTweets();
+
+let getAppState = () => {
+  return { tweetsList: TweetStore.getAll() };
+};
 
 class Main extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      tweetsList: []
-    };
+    this.state = getAppState();
+    this._onChange = this._onChange.bind(this);
   }
 
-  formattedTweets(tweetsList) {
-    const formattedList = tweetsList.map(tweet => {
-      tweet.formattedDate = moment(tweet.created_at).fromNow();
-      return tweet;
-    });
-    return {
-      tweetsList: formattedList
-    };
-  }
+  // addTweet(tweetToAdd) {
+  //   // $.post("/tweets", { body: tweetToAdd })
+  //   //   .success(savedTweet => {
+  //   //     let newTweetsList = this.state.tweetsList;
+  //   //     newTweetsList.unshift(savedTweet)
 
-  addTweet(tweetToAdd) {
-    $.post("/tweets", { body: tweetToAdd })
-      .success(savedTweet => {
-        let newTweetsList = this.state.tweetsList;
-        newTweetsList.unshift(savedTweet)
-
-        this.setState(this.formattedTweets(newTweetsList));
-      })
-      .error(error => console.log(error));
-
-  }
+  //   //     this.setState(this.formattedTweets(newTweetsList));
+  //   //   })
+  //   //   .error(error => console.log(error));
+  // }
 
   componentDidMount() {
-    $.ajax("/tweets")
-      .success(data => this.setState(this.formattedTweets(data)))
-        .error(error => console.log(error));
+    TweetStore.addChangeListener(this._onChange)
+  }
+
+  componentWillUnmount() {
+    TweetStore.removeChangeListener(this._onChange)
+  }
+
+  _onChange() {
+    this.setState(getAppState());
   }
 
   render() {
     return (
       <div className="container">
-        <TweetBox sendTweet={this.addTweet.bind(this)} />
+        <TweetBox />
         <TweetList tweets={this.state.tweetsList} />
       </div>
     );
