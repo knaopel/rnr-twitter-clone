@@ -1,13 +1,6 @@
 import TweetBox from './components/tweet-box';
 import TweetList from './components/tweet-list';
 
-// const mockTweets = [
-//   { id: 1, name: 'Kurt Opel', body: 'my #firsttweet' },
-//   { id: 2, name: 'Kurt Opel', body: 'my #secondtweet' },
-//   { id: 3, name: 'Kurt Opel', body: 'my #thirdtweet' }
-// ];
-
-
 class Main extends React.Component {
   constructor(props) {
     super(props);
@@ -32,11 +25,16 @@ class Main extends React.Component {
   }
 }
 
+
 let documentReady = () => {
-  ReactDOM.render(
-    <Main />,
-    document.getElementById('react')
-  );
+  const reactNode = document.getElementById('react');
+  if (reactNode) {
+    ReactDOM.render(
+      <Main />,
+      reactNode
+    );
+  }
+
 };
 
 $(documentReady);
