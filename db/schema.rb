@@ -11,12 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190626152340) do
+ActiveRecord::Schema.define(version: 20190626201756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pg_stat_statements"
   enable_extension "pg_buffercache"
+
+  create_table "followers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "followed_by"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "tweets", force: :cascade do |t|
     t.integer  "user_id"
