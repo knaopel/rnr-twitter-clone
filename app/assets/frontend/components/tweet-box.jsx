@@ -1,3 +1,4 @@
+import React from 'react';
 import TweetActions from '../actions/tweet-actions';
 
 export default class TweetBox extends React.Component {
